@@ -1,0 +1,179 @@
+{
+  "name": "Interview-agent",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "Interview-agent",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "fc91845c-5f61-4969-8445-b323b897b8b1",
+      "name": "Webhook",
+      "webhookId": "68d688ee-e3d4-4731-a620-20a8f6ef4bb7"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5acc086b-2f32-410c-a94d-7e62165427e7",
+              "name": "role",
+              "value": "={{$json.body.role}}",
+              "type": "string"
+            },
+            {
+              "id": "a0d82329-43a2-48a6-b775-daf342039c0f",
+              "name": "mode",
+              "value": "={{$json.body.mode}}",
+              "type": "string"
+            },
+            {
+              "id": "9c87b98f-006f-4d0d-9093-94d8d96aea51",
+              "name": "instructions",
+              "value": "={{$json.body.instructions}}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": "=",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "d548099e-33e6-4f24-9d9f-0724cc9a7c7a",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "model": "llama-3.3-70b-versatile",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        768,
+        160
+      ],
+      "id": "15b41814-1fff-422b-952c-ee3b7512484a",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "DKnWzxygZ3jlHAX0",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        944,
+        48
+      ],
+      "id": "3ad60884-ef13-4ff5-affa-17e660113ef2",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{\n`You are an AI Interview Preparation Assistant.\n\nCandidate Role: ${$json.role}\nMode: ${$json.mode}\n\n${$json.instructions}\n\nGenerate output specific to the role and mode:\n- Coding Round → coding questions\n- Resume-Based Questions → personalized questions\n- General Interview Questions → technical + HR questions\n- Aptitude Round → aptitude/logical questions\n\nDo not give generic repeated answers.`\n}}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "You are a helpful AI interview preparation assistant."
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        432,
+        0
+      ],
+      "id": "2ceebbd8-92a1-4846-8162-54056cf64ee0",
+      "name": "Basic LLM Chain"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "versionId": "1480bb2d-55a7-4d2e-b067-fe96d4795dfb",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0b0bda8c9ea51e047f009838c4aa0fa61a8f63036c67b821f5eb7e214644c013"
+  },
+  "id": "3zZks37LtseB2lRz",
+  "tags": []
+}
