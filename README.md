@@ -36,7 +36,7 @@ interview-agent/
 ├── .gitignore
 └── Interview-agent.json
 
-## How it works
+**## How it works**
 
 1. The user enters a job role and selects an interview mode.
 2. Optionally, the user uploads a resume.
@@ -45,7 +45,7 @@ interview-agent/
 5. The AI generates relevant interview questions and preparation tips.
 6. The response is returned to the frontend and displayed in a structured format.
 
-## Supported interview modes:
+**## Supported interview modes:**
 # General Interview Questions
 Generates technical and HR-style questions.
 # Coding Round
