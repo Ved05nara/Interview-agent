@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Interview Coach | Smart Interview Preparation</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="orb-1"></div>
+    <div class="orb-2"></div>
+    
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16 4L4 10L16 16L28 10L16 4Z" stroke="url(#gradient)" stroke-width="1.5" fill="url(#gradient)" fill-opacity="0.2"/>
+                    <path d="M4 10V22L16 28L28 22V10" stroke="url(#gradient)" stroke-width="1.5" fill="none"/>
+                    <path d="M16 16V28" stroke="url(#gradient)" stroke-width="1.5"/>
+                    <defs>
+                        <linearGradient id="gradient" x1="4" y1="4" x2="28" y2="28" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#6366f1"/>
+                            <stop offset="1" stop-color="#38bdf8"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>AI Interview Coach</span>
+            </div>
+            <div class="nav-badge" id="connectionStatus">Loading...</div>
+        </div>
+    </nav>
+
+    <main class="main">
+        <div class="container">
+            <div class="hero">
+                <div class="hero-badge">
+                    <span>✨ AI-Powered Interview Preparation</span>
+                </div>
+                <h1>Master Your Next<br>Interview with AI</h1>
+                <p class="hero-subtitle">Practice with personalized questions, coding challenges, and aptitude tests — all powered by advanced AI.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2>Interview Setup</h2>
+                    <p>Configure your practice session</p>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label>
+                            <span class="label-icon">🎯</span>
+                            Job Role / Topic
+                        </label>
+                        <input type="text" id="roleInput" placeholder="e.g., Senior Frontend Engineer, Machine Learning Specialist, Product Manager" value="Full Stack Developer">
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <span class="label-icon">📄</span>
+                            Resume (Optional)
+                        </label>
+                        <div class="upload-area" id="uploadArea">
+                            <input type="file" id="resumeUpload" accept=".pdf,.docx">
+                            <div class="upload-content">
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M13 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-5-5z"/>
+                                    <polyline points="13 3 13 8 18 8"/>
+                                </svg>
+                                <p class="upload-text">Click to upload or drag and drop</p>
+                                <p class="upload-hint">PDF or DOCX (max 10MB)</p>
+                            </div>
+                            <div class="file-info" id="fileInfo" style="display: none;">
+                                <span class="file-name" id="fileName"></span>
+                                <button class="remove-file" id="removeFile">×</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <span class="label-icon">⚡</span>
+                            Practice Mode
+                        </label>
+                        <div class="mode-selector" id="modeSelector">
+                            <div class="mode-option" data-mode="General Interview Questions">
+                                <div class="mode-icon">🎤</div>
+                                <div class="mode-info">
+                                    <span class="mode-name">General Interview</span>
+                                    <span class="mode-desc">Standard Q&A</span>
+                                </div>
+                            </div>
+                            <div class="mode-option" data-mode="Resume-Based Questions">
+                                <div class="mode-icon">📋</div>
+                                <div class="mode-info">
+                                    <span class="mode-name">Resume-Based</span>
+                                    <span class="mode-desc">Personalized questions</span>
+                                </div>
+                            </div>
+                            <div class="mode-option" data-mode="Coding Round">
+                                <div class="mode-icon">💻</div>
+                                <div class="mode-info">
+                                    <span class="mode-name">Coding Round</span>
+                                    <span class="mode-desc">Algorithms & DSA</span>
+                                </div>
+                            </div>
+                            <div class="mode-option" data-mode="Aptitude Round">
+                                <div class="mode-icon">🧠</div>
+                                <div class="mode-info">
+                                    <span class="mode-name">Aptitude Round</span>
+                                    <span class="mode-desc">Quant & Logical</span>
+                                </div>
+                            </div>
+                        </div>
+                        <select id="practiceMode" style="display: none;">
+                            <option value="General Interview Questions">General Interview Questions</option>
+                            <option value="Resume-Based Questions">Resume-Based Questions</option>
+                            <option value="Coding Round">Coding Round</option>
+                            <option value="Aptitude Round">Aptitude Round</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button id="generateBtn" class="generate-btn">
+                    <span>Generate Interview Questions</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-section" id="resultsSection" style="display: none;">
+                <div class="results-header">
+                    <h2>Your AI-Generated Interview Prep</h2>
+                    <div class="results-actions">
+                        <button class="action-btn" id="copyResultsBtn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            Copy All
+                        </button>
+                    </div>
+                </div>
+                <div id="resultsPanel" class="results-panel"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Config file - generated from .env -->
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
